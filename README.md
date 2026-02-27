@@ -1,60 +1,50 @@
-# DBA Challenge 20240802
+# BikeStores SQL Challenge
 
+Consultas SQL sobre a base de dados da empresa Bike Stores Inc para geração de métricas relevantes para as equipes de Marketing e Comercial.
 
-## Introdução
+## Tecnologias
 
-Nesse desafio trabalharemos utilizando a base de dados da empresa Bike Stores Inc com o objetivo de obter métricas relevantes para equipe de Marketing e Comercial.
+- **T-SQL** (Transact-SQL)
+- **SQL Server**
 
-Com isso, teremos que trabalhar com várioas consultas utilizando conceitos como `INNER JOIN`, `LEFT JOIN`, `RIGHT JOIN`, `GROUP BY` e `COUNT`.
+## Modelo de Dados
 
-### Antes de começar
- 
-- O projeto deve utilizar a Linguagem específica na avaliação. Por exempo: SQL, T-SQL, PL/SQL e PSQL;
-- Considere como deadline da avaliação a partir do início do teste. Caso tenha sido convidado a realizar o teste e não seja possível concluir dentro deste período, avise a pessoa que o convidou para receber instruções sobre o que fazer.
-- Documentar todo o processo de investigação para o desenvolvimento da atividade (README.md no seu repositório); os resultados destas tarefas são tão importantes do que o seu processo de pensamento e decisões à medida que as completa, por isso tente documentar e apresentar os seus hipóteses e decisões na medida do possível.
- 
- 
+![Modelo de Dados](samples/model.png)
 
-## O projeto
+## Como instalar e usar
 
-- Criar as consultas utilizando a linguagem escolhida;
-- Entregar o código gerado do Teste.
+### Pré-requisitos
 
-### Modelo de Dados:
+- SQL Server (ou SQL Server Express) instalado
 
-Para entender o modelo, revisar o diagrama a seguir:
+### Passos
 
-![<img src="samples/model.png" height="500" alt="Modelo" title="Modelo"/>](samples/model.png)
+1. Execute o script de criação do banco e das tabelas:
+   ```sql
+   -- Execute o arquivo:
+   CREATE_DB_AND_TABLES.sql
+   ```
 
+2. Execute o script de inserção dos dados fictícios:
+   ```sql
+   -- Execute o arquivo:
+   SEEDING_TABLES_FAKE_DATA.sql
+   ```
 
-## Selects
+3. Execute as consultas de exemplo:
+   ```sql
+   -- Execute o arquivo:
+   QUERIES_EXAMPLES.sql
+   ```
 
-Construir as seguintes consultas:
+## Consultas implementadas
 
-- Listar todos Clientes que não tenham realizado uma compra;
-- Listar os Produtos que não tenham sido comprados
-- Listar os Produtos sem Estoque;
-- Agrupar a quantidade de vendas que uma determinada Marca por Loja. 
-- Listar os Funcionarios que não estejam relacionados a um Pedido.
+- Listar todos os Clientes que não realizaram uma compra
+- Listar os Produtos que não foram comprados
+- Listar os Produtos sem Estoque
+- Listar os Funcionários que não estão relacionados a nenhum Pedido
+- Agrupar a quantidade de vendas por Marca e por Loja
 
-## Readme do Repositório
+---
 
-- Deve conter o título do projeto
-- Uma descrição sobre o projeto em frase
-- Deve conter uma lista com linguagem, framework e/ou tecnologias usadas
-- Como instalar e usar o projeto (instruções)
-- Não esqueça o [.gitignore](https://www.toptal.com/developers/gitignore)
-- Se está usando github pessoal, referencie que é um challenge by coodesh:  
-
->  This is a challenge by [Coodesh](https://coodesh.com/)
-
-## Finalização e Instruções para a Apresentação
-
-1. Adicione o link do repositório com a sua solução no teste
-2. Verifique se o Readme está bom e faça o commit final em seu repositório;
-3. Envie e aguarde as instruções para seguir. Caso o teste tenha apresentação de vídeo, dentro da tela de entrega será possível gravar após adicionar o link do repositório. Sucesso e boa sorte. =)
-
-
-## Suporte
-
-Para tirar dúvidas sobre o processo envie uma mensagem diretamente a um especialista no chat da plataforma. 
+> This is a challenge by [Coodesh](https://coodesh.com/)

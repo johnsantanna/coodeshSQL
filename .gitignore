@@ -1,0 +1,30 @@
+# SQL Server files
+*.mdf
+*.ldf
+*.ndf
+
+# Backup files
+*.bak
+*.trn
+
+# Temporary files
+*.tmp
+*.temp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# SQL Server Management Studio files
+*.sqlssmssln
+*.sqlssmssln.docstates
+*.sqlssmssln.user
+*.sqlssmssln.userosscache
+*.sqlssmssln.suo
