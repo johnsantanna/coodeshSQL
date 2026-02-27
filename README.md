@@ -1,60 +1,94 @@
-# DBA Challenge 20240802
+# DBA Challenge - Bike Stores Inc
 
+Consultas SQL sobre a base de dados da empresa Bike Stores Inc para obter métricas relevantes para as equipes de Marketing e Comercial.
 
-## Introdução
+## Tecnologias Utilizadas
 
-Nesse desafio trabalharemos utilizando a base de dados da empresa Bike Stores Inc com o objetivo de obter métricas relevantes para equipe de Marketing e Comercial.
+- **SQL** (T-SQL / SQL Server)
 
-Com isso, teremos que trabalhar com várioas consultas utilizando conceitos como `INNER JOIN`, `LEFT JOIN`, `RIGHT JOIN`, `GROUP BY` e `COUNT`.
+## Modelo de Dados
 
-### Antes de começar
- 
-- O projeto deve utilizar a Linguagem específica na avaliação. Por exempo: SQL, T-SQL, PL/SQL e PSQL;
-- Considere como deadline da avaliação a partir do início do teste. Caso tenha sido convidado a realizar o teste e não seja possível concluir dentro deste período, avise a pessoa que o convidou para receber instruções sobre o que fazer.
-- Documentar todo o processo de investigação para o desenvolvimento da atividade (README.md no seu repositório); os resultados destas tarefas são tão importantes do que o seu processo de pensamento e decisões à medida que as completa, por isso tente documentar e apresentar os seus hipóteses e decisões na medida do possível.
- 
- 
+![Modelo de Dados](samples/model.png)
 
-## O projeto
+## Como Instalar e Usar
 
-- Criar as consultas utilizando a linguagem escolhida;
-- Entregar o código gerado do Teste.
+### Pré-requisitos
 
-### Modelo de Dados:
+- SQL Server (ou qualquer SGBD compatível com T-SQL, como Azure SQL ou SQL Server Express)
 
-Para entender o modelo, revisar o diagrama a seguir:
+### Instalação
 
-![<img src="samples/model.png" height="500" alt="Modelo" title="Modelo"/>](samples/model.png)
+1. Clone este repositório:
+   ```bash
+   git clone https://github.com/johnsantanna/coodeshSQL.git
+   cd coodeshSQL
+   ```
 
+2. Importe a base de dados **Bike Stores Inc** no seu servidor SQL. Você pode obter o script de criação da base em: https://www.sqlservertutorial.net/sql-server-sample-database/
 
-## Selects
+3. Conecte-se ao banco de dados usando seu cliente SQL preferido (ex.: SQL Server Management Studio, DBeaver, Azure Data Studio).
 
-Construir as seguintes consultas:
+### Executando as Consultas
 
-- Listar todos Clientes que não tenham realizado uma compra;
-- Listar os Produtos que não tenham sido comprados
-- Listar os Produtos sem Estoque;
-- Agrupar a quantidade de vendas que uma determinada Marca por Loja. 
-- Listar os Funcionarios que não estejam relacionados a um Pedido.
+Abra os arquivos `.sql` no seu cliente e execute-os contra o banco de dados **BikeStores**:
 
-## Readme do Repositório
+- **Clientes sem compras** – lista todos os clientes que não realizaram nenhuma compra.
+- **Produtos não comprados** – lista os produtos que nunca foram vendidos.
+- **Produtos sem estoque** – lista os produtos com quantidade zero em estoque.
+- **Vendas por marca e loja** – agrupa a quantidade de vendas de cada marca por loja.
+- **Funcionários sem pedido** – lista os funcionários que não estão associados a nenhum pedido.
 
-- Deve conter o título do projeto
-- Uma descrição sobre o projeto em frase
-- Deve conter uma lista com linguagem, framework e/ou tecnologias usadas
-- Como instalar e usar o projeto (instruções)
-- Não esqueça o [.gitignore](https://www.toptal.com/developers/gitignore)
-- Se está usando github pessoal, referencie que é um challenge by coodesh:  
+## Consultas
 
->  This is a challenge by [Coodesh](https://coodesh.com/)
+### 1. Clientes que não realizaram compras
 
-## Finalização e Instruções para a Apresentação
+```sql
+SELECT c.customer_id, c.first_name, c.last_name, c.email
+FROM sales.customers c
+LEFT JOIN sales.orders o ON c.customer_id = o.customer_id
+WHERE o.customer_id IS NULL;
+```
 
-1. Adicione o link do repositório com a sua solução no teste
-2. Verifique se o Readme está bom e faça o commit final em seu repositório;
-3. Envie e aguarde as instruções para seguir. Caso o teste tenha apresentação de vídeo, dentro da tela de entrega será possível gravar após adicionar o link do repositório. Sucesso e boa sorte. =)
+### 2. Produtos que não foram comprados
 
+```sql
+SELECT p.product_id, p.product_name
+FROM production.products p
+LEFT JOIN sales.order_items oi ON p.product_id = oi.product_id
+WHERE oi.product_id IS NULL;
+```
 
-## Suporte
+### 3. Produtos sem estoque
 
-Para tirar dúvidas sobre o processo envie uma mensagem diretamente a um especialista no chat da plataforma. 
+```sql
+SELECT p.product_id, p.product_name, s.store_id, s.quantity
+FROM production.products p
+JOIN production.stocks s ON p.product_id = s.product_id
+WHERE s.quantity = 0;
+```
+
+### 4. Quantidade de vendas por marca por loja
+
+```sql
+SELECT st.store_name, b.brand_name, COUNT(oi.order_id) AS total_vendas
+FROM sales.orders o
+JOIN sales.stores st ON o.store_id = st.store_id
+JOIN sales.order_items oi ON o.order_id = oi.order_id
+JOIN production.products p ON oi.product_id = p.product_id
+JOIN production.brands b ON p.brand_id = b.brand_id
+GROUP BY st.store_name, b.brand_name
+ORDER BY st.store_name, total_vendas DESC;
+```
+
+### 5. Funcionários sem pedido relacionado
+
+```sql
+SELECT s.staff_id, s.first_name, s.last_name, s.email
+FROM sales.staffs s
+LEFT JOIN sales.orders o ON s.staff_id = o.staff_id
+WHERE o.staff_id IS NULL;
+```
+
+---
+
+> This is a challenge by [Coodesh](https://coodesh.com/)
